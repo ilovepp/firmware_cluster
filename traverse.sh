@@ -13,6 +13,9 @@ folder=$1
 manufacturer_path_level=$2
 timeout=$3
 
+INSERT_CMD_START="db.files.insert({"
+INSERT_CMD_END="});"
+
 IFS=$(echo -e "\n\b")
 
 firmcount=0
@@ -24,6 +27,7 @@ do
 done
 
 firmid=0
+elfid=0
 for item in `find "$folder"`
 do
 	if [ -f "$item" ];then
@@ -44,13 +48,19 @@ do
 		
 		if [ -d /tmp/_${filename}.extracted ];then
 			for item in `find "/tmp/_${filename}.extracted"`
-			do			
-				if [  "`file "$item"|grep ELF`" ] ;then	
-					FirmName="${item##*/}"
-					FileSize="'`ls -l "$item"|cut -d " " -f 5`'"
-					FileMd5="'`md5sum "$item"|cut -d " " -f 1`'"
-					Manufacturer="'`echo "$filepath"|cut -d "/" -f $manufacturer_path_level`'"
-					echo "	$FirmName $FileSize $FileMd5 $Manufacturer" 
+			do		
+				if [ -n "`file "$item"|grep ELF`" ] ;then
+					((elfid++))		
+					FileName="${item##*/}"
+					FileSize=$(ls -l "$item"|cut -d " " -f 5)
+					FileMd5=$(md5sum "$item"|cut -d " " -f 1)
+					Manufacturer=$(echo "$filepath"|cut -d "/" -f $manufacturer_path_level)
+					FirmName="$filepath"
+					strings --bytes=10 "$item" > "./output/"${elfid}"_"${FileName}".tmp"
+					[ -s "./output/${elfid}_${FileName}.tmp" ] && ./a.out "./output/${elfid}_${FileName}.tmp" > "./output/${elfid}_${FileName}" && records="${INSERT_CMD_START}Manufacturer:\"${Manufacturer}\",FirmName:\"${FirmName}\",FileName:\"${FileName}\",FileSize:${FileSize},FileMd5:\"${FileMd5}\",StrFileName:\"${elfid}_${FileName}\"${INSERT_CMD_END}" && echo "$records"|mongo --quiet --shell
+					rm "./output/${elfid}_${FileName}.tmp"
+					
+					echo "        ${elfid}:${FileName}"
 				fi
 			done
 			rm -rf "/tmp/_${filename}.extracted"
@@ -59,35 +69,4 @@ do
 		fi
 	fi
 done
-
-
-
-
-
-
-
-
-
-#old_IFS=$IFS
-#IFS=$(echo -e "\n\b")
-#traverse_dir(){
-#	for item in `ls "$1"`
-#	do
-#		if [ -d "$1""/""$item" ] && [ ! -L "$1""/""$item" ];then
-#			traverse_dir "$1""/""$item"
-#		elif [ -f "$1""/""$item" ];then
-#			filepath="$1""/""$item"
-#			filename="${filepath##*/}"
-#			binwalk -q -e -M --depth=15 "$filepath" -C /tmp
-#			for item in `find "/tmp/_${filename}.extracted"`
-#			do
-#				file $item
-#			done
-#			rm -rf "/tmp/_${filename}.extracted"
-#		fi	
-#	done
-#}
-
-#traverse_dir "$1"
-#IFS=$old_IFS
 
