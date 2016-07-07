@@ -1,0 +1,23 @@
+ARM:
+161 ARM: predict correct 160
+71 other files: predict correct 71
+211 MIPS: predict correct 211
+14 PPC: predict correct 14
+
+MIPS:
+211 MIPS: predict correct 210
+71 other files: predict correct 71
+161 ARM: predict correct 161
+14 PPC: predict correc 14
+
+PPC:
+14 PPC: predict correct 14
+211 MIPS: predict correct 211
+71 other files: predict correct 71
+161 ARM: predict correct 161
+
+
+
+
+
+

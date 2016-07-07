@@ -39,7 +39,7 @@ def stumpClassify(dataMatrix,dimen,threshVal,threshIneq):#just classify the data
 def buildStump(dataArr,classLabels,D):
     dataMatrix = mat(dataArr); labelMat = mat(classLabels).T
     m,n = shape(dataMatrix)
-    numSteps = 10.0; bestStump = {}; bestClasEst = mat(zeros((m,1)))
+    numSteps = 20.0; bestStump = {}; bestClasEst = mat(zeros((m,1)))
     minError = inf #init error sum, to +infinity
     for i in range(n):#loop over all dimensions
         rangeMin = dataMatrix[:,i].min(); rangeMax = dataMatrix[:,i].max();
@@ -129,20 +129,20 @@ def plotROC(predStrengths, classLabels):
     plt.show()
     print "the Area Under the Curve is: ",ySum*xStep
 
-datArr,labelArr = loadDataSet('arm_train.txt')
-classifierArr,aggClassEst = adaBoostTrainDS(datArr,labelArr,4)
+datArr,labelArr = loadDataSet('arm_train')
+classifierArr,aggClassEst = adaBoostTrainDS(datArr,labelArr,5)
 
 #classifierArr = [{'dim': 9, 'ineq': 'gt', 'thresh': 3.0, 'alpha': 0.4616623792657677}, {'dim': 17, 'ineq': 'gt', 'thresh': 52.5, 'alpha': 0.31248245042467176}, {'dim': 3, 'ineq': 'gt', 'thresh': 55.199999999999996, 'alpha': 0.28680973201695525}, {'dim': 18, 'ineq': 'lt', 'thresh': 62.300000000000004, 'alpha': 0.2329700463893952}, {'dim': 10, 'ineq': 'lt', 'thresh': 0.0, 'alpha': 0.19803846151213855}, {'dim': 5, 'ineq': 'gt', 'thresh': 2.0, 'alpha': 0.1884788734902091}, {'dim': 12, 'ineq': 'lt', 'thresh': 1.2, 'alpha': 0.15227368997476828}, {'dim': 7, 'ineq': 'gt', 'thresh': 1.2, 'alpha': 0.15510870821690512}, {'dim': 5, 'ineq': 'lt', 'thresh': 0.0, 'alpha': 0.13536197353359228}, {'dim': 4, 'ineq': 'lt', 'thresh': 28.799999999999997, 'alpha': 0.12521587326132078}]
 
-testArr,testlabelArr = loadDataSet('arm_test.txt')
+#testArr,testlabelArr = loadDataSet('arm_test.txt')
 print classifierArr
 
-prediction10 = adaClassify(testArr,classifierArr)
+#prediction10 = adaClassify(testArr,classifierArr)
 
-print(len(prediction10))
+#print(len(prediction10))
 
-errArr=mat(ones((len(prediction10),1)))
-print errArr[prediction10!=mat(testlabelArr).T].sum()
+#errArr=mat(ones((len(prediction10),1)))
+#print errArr[prediction10!=mat(testlabelArr).T].sum()
 
 plotROC(aggClassEst.T,labelArr)
 
