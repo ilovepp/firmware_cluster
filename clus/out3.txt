@@ -1,0 +1,32 @@
+get the data from db: 13.3248419762
+get the data from db: 7.07638692856
+get the data from db: 9.62784004211
+first solve the dic: 1.76500988007
+get the data from db: 9.64352703094
+first solve the dic: 1.47352099419
+get the data from db: 8.11628198624
+first solve the dic: 1.39788198471
+get the data from db: 11.2459421158
+first solve the dic: 1.30081701279
+get the data from db: 7.76861214638
+first solve the dic: 1.36280083656
+Second solve the dic: 0.71835398674
+get the data from db: 13.1184220314
+first solve the dic: 1.37403702736
+Second solve the dic: 0.740628004074
+get the data from db: 11.7795979977
+first solve the dic: 1.31007599831
+get the data from db: 10.5097680092
+first solve the dic: 1.33526492119
+get the data from db: 12.835875988
+first solve the dic: 1.70949912071
+Second solve the dic: 0.894046068192
+get the data from db: 8.43348503113
+first solve the dic: 2.14623999596
+Second solve the dic: 3.86604380608
+get the data from db: 9.21015095711
+first solve the dic: 1.41798996925
+get the data from db: 11.6779499054
+get the data from db: 11.6068711281
+first solve the dic: 2.28268098831
+Second solve the dic: 1.37934303284
